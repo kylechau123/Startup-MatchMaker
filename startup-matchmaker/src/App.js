@@ -2,8 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import HomePage from './components/HomePage';
-import ProfilePage from './components/ProfilePage';
-import StartupPage from './components/StartupPage';
+import ProfilePage from './components/ProfileForm';
+import StartupPage from './components/StartupCard';
+// import { AuthContext } from './contexts/AuthContext'; // may ue to access the logged-in data 
+
 
 function App() {
   return (
