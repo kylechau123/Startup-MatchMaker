@@ -1,29 +1,24 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import Homepage from './components/HomePage'; // need to add
-import ProfilePage from './components/ProfileForm';
-import StartupPage from './components/StartupCard';
+import HomePage from './components/HomePage';
+import ProfilePage from './components/ProfilePage';
+import StartupPage from './components/StartupPage';
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <Switch>
-          <Route exact path="/">
-            <HomePage />
-          </Route>
-          <Route path="/profile">
-            <ProfilePage />
-          </Route>
-          <Route path="/startup/:id">
-            <StartupPage />
-          </Route>
-          {/* Add more <Route> tags as needed for additional pages */}
-        </Switch>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/startup/:id" element={<StartupPage />} />
+        </Routes>
       </div>
     </Router>
   );
 }
 
 export default App;
+
+
