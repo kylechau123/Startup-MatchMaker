@@ -10,6 +10,15 @@ const typeDefs = gql`
     password: String
   }
 
+  type Message {
+    _id: ID
+    conversationId: ID
+    sender: ID
+    text: String
+    createdAt: String
+    updatedAt: String
+  }
+
   type Investor {
     _id: ID
     companyName: String
@@ -30,6 +39,7 @@ const typeDefs = gql`
     allStartups: [Startup]
     getStartup(startup_id: ID!): Startup
     getInvestor(investor_id: ID!): Investor
+    messages(conversationId: ID!): [Message]
   }
 
   type Mutation {
