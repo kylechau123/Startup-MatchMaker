@@ -62,6 +62,8 @@ const typeDefs = gql`
     match(
       startup_id: ID!
     ): Investor
+    
+    sendMessage(conversationId: ID!, sender: ID!, text: String!): Message
   }
 `;
 
