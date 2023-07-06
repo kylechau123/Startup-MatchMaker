@@ -29,6 +29,10 @@ const resolvers = {
 
             return { token, startup };
         },
+        sendMessage: async (parent, { conversationId, sender, text }) => {
+            const message = await Message.create({ conversationId, sender, text });
+            return message;
+          },
         addInvestor: async (parent, args) => {
             const investor = await Investor.create(args);
             const token = signToken(investor);
