@@ -16,7 +16,11 @@ const resolvers = {
         getInvestor: async (parent, { investor_id }) => {
             const investor = await Investor.findById(investor_id)
             return investor;
-        }
+        },
+        messages: async (parent, { conversationId }) => {
+            const messages = await Message.find({ conversationId }).sort('createdAt');
+            return messages;
+          },
     },
     Mutations: {
         addStartup: async (parent, args) => {
@@ -25,6 +29,10 @@ const resolvers = {
 
             return { token, startup };
         },
+        sendMessage: async (parent, { conversationId, sender, text }) => {
+            const message = await Message.create({ conversationId, sender, text });
+            return message;
+          },
         addInvestor: async (parent, args) => {
             const investor = await Investor.create(args);
             const token = signToken(investor);
