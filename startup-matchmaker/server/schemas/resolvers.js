@@ -21,6 +21,12 @@ const resolvers = {
             const messages = await Message.find({ conversationId }).sort('createdAt');
             return messages;
           },
+        investmentsByInvestor: async (parent, { investorId }) => {
+            return await Investment.find({ investor: investorId });
+          },
+          investmentsByStartup: async (parent, { startupId }) => {
+            return await Investment.find({ startup: startupId });
+          },
     },
     Mutations: {
         addStartup: async (parent, args) => {
