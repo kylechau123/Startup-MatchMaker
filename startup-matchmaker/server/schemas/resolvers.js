@@ -45,6 +45,17 @@ const resolvers = {
 
             return { token, investor };
         },
+        updateInvestment: async (parent, { investmentId, status, description }) => {
+            return await Investment.findByIdAndUpdate(
+              investmentId,
+              { status, description },
+              { new: true } // This option returns the updated document
+            );
+          },
+        deleteInvestment: async (parent, { investmentId }) => {
+            return await Investment.findByIdAndDelete(investmentId);
+          },
+
         startupLogin: async (parent, { email, password }) => {
             const startup = await Startup.findOne({ email });
 
