@@ -40,6 +40,8 @@ const typeDefs = gql`
     getStartup(startup_id: ID!): Startup
     getInvestor(investor_id: ID!): Investor
     messages(conversationId: ID!): [Message]
+    investmentsByInvestor(investorId: ID!): [Investment]
+    investmentsByStartup(startupId: ID!): [Investment]
   }
 
   type Mutation {
