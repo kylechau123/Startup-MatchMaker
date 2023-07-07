@@ -75,7 +75,15 @@ const typeDefs = gql`
       startup_id: ID!
     ): Investor
     
-    sendMessage(conversationId: ID!, sender: ID!, text: String!): Message
+    sendMessage(
+        conversationId: ID!, sender: ID!, text: String!
+        ): Message
+
+    updateInvestment(investmentId: ID!, status: String!, description: String!
+        ): Investment
+    
+    deleteInvestment(investmentId: ID!
+        ): Investment
   }
 `;
 
