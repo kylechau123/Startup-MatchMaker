@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import StartupList from './lists/StartupList';
+import InvestorList from './lists/InvestorList';
+
 
 const Container = styled.div`
   display: flex;
@@ -29,14 +32,16 @@ const Button = styled.button`
   }
 `;
 
-const HomePage = () => {
+const HomePage = ({ title }) => {
   return (
     <Container>
-      <Title>Welcome to Startup Matchmaker</Title>
-      <Button>Enter</Button>
+      <Title>{title}</Title>
+      <StartupList />
+      <InvestorList />
     </Container>
   );
 };
 
 export default HomePage;
+
 
