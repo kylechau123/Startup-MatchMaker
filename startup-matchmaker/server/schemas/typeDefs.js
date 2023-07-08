@@ -67,6 +67,15 @@ const typeDefs = gql`
       password: String
     ): Auth
 
+    updateStartup(
+        startup_id: ID!
+        companyName: String
+        email: String
+        phoneNum: String
+        userName: String
+        password: String
+      ): Startup
+
     investorLogin(
       email: String
       password: String
