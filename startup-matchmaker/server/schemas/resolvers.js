@@ -70,6 +70,10 @@ const resolvers = {
               { new: true } // This option returns the updated document
             );
           },
+          updateStartup: async (parent, args, { startup_id }) => {
+            const startup = await Startup.findByIdAndUpdate(startup_id, args, { new: true });
+            return startup;
+        },
         deleteInvestment: async (parent, { investmentId }) => {
             return await Investment.findByIdAndDelete(investmentId);
           },
