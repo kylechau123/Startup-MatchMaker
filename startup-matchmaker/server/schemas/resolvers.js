@@ -45,6 +45,20 @@ const resolvers = {
 
             return { token, investor };
         },
+        deleteInvestor: async (parent, { investor_id }) => {
+            const investor = await Investor.findByIdAndDelete(investor_id);
+            if(!investor) {
+                throw new Error('Investor not found');
+            }
+            return "Investor deleted successfully";
+        },
+        deleteStartup: async (parent, { startup_id }) => {
+            const startup = await Startup.findByIdAndDelete(startup_id);
+            if(!startup) {
+                throw new Error('Startup not found');
+            }
+            return "Startup deleted successfully";
+        },
         updateInvestment: async (parent, { investmentId, status, description }) => {
             return await Investment.findByIdAndUpdate(
               investmentId,
