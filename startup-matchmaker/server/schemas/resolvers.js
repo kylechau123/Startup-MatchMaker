@@ -32,7 +32,7 @@ const resolvers = {
             return conversations;
         },
     },
-    Mutations: {
+    Mutation: {
         addStartup: async (parent, args) => {
             const startup = await Startup.create(args);
             const token = signToken(startup);
