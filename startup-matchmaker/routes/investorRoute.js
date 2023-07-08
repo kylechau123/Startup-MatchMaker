@@ -1,6 +1,6 @@
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
-const schema = require('./schema');
+const schema = require('../server/schemas');
 const router = express.Router();
 const { Investor } = require('../server/models/Investor');
 // Get all investors
