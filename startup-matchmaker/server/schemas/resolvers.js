@@ -27,6 +27,10 @@ const resolvers = {
         investmentsByStartup: async (parent, { startupId }) => {
             return await Investment.find({ startup: startupId });
           },
+          investorConversations: async (parent, { investorId }) => {
+            const conversations = await Conversation.find({ investorId });
+            return conversations;
+        },
     },
     Mutations: {
         addStartup: async (parent, args) => {
