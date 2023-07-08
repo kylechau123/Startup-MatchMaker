@@ -2,39 +2,37 @@ const express = require('express');
 const graphqlHTTP = require('express-graphql');
 const schema = require('./schema');
 const router = express.Router();
-const { Investor } = require('../server/models/Investor');
-// Get all investors
+const { Starup } = require('../server/models/Startup');
+// Get all startups
 router.get('/', async (req, res) => {
   const result = await graphqlHTTP.execute(schema, {
     query: `
       query {
-        investors {
+        startups {
           companyName
           email
           phoneNum
           userName
-          startups
         }
       }
     `,
   });
 
-  res.json(result.data.investors);
+  res.json(result.data.startups);
 });
 
-// Create a new investor
+// Create a new startup
 router.post('/', async (req, res) => {
   const { companyName, email, phoneNum, userName, password } = req.body;
 
   const result = await graphqlHTTP.execute(schema, {
     query: `
-      mutation CreateInvestor($companyName: String!, $email: String!, $phoneNum: String!, $userName: String!, $password: String!) {
-        createInvestor(companyName: $companyName, email: $email, phoneNum: $phoneNum, userName: $userName, password: $password) {
+      mutation CreateStartup($companyName: String!, $email: String!, $phoneNum: String!, $userName: String!, $password: String!) {
+        createStartup(companyName: $companyName, email: $email, phoneNum: $phoneNum, userName: $userName, password: $password) {
           companyName
           email
           phoneNum
           userName
-          startups
         }
       }
     `,
@@ -47,7 +45,7 @@ router.post('/', async (req, res) => {
     },
   });
 
-  res.json(result.data.createInvestor);
+  res.json(result.data.createStartup);
 });
 
 module.exports = router;

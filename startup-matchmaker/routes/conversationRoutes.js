@@ -1,7 +1,7 @@
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
 const schema = require('./schema');
-const { Conversation } = require('../models');
+const { Conversation } = require('../server/models/Conversation');
 const router = express.Router();
 
 router.get('/:investorId/conversations', async (req, res) => {
