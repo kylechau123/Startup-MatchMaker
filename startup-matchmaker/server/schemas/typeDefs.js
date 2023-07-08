@@ -43,6 +43,9 @@ const typeDefs = gql`
     investmentsByInvestor(investorId: ID!): [Investment]
     investmentsByStartup(startupId: ID!): [Investment]
     investorConversations(investorId: ID!): [Conversation]
+    matchedStartups(investorId: ID!): [Startup]!
+    matchedInvestors(startupId: ID!): [Investor]!
+    startupConversations(startupId: ID!): [Conversation]!
   }
 
   type Mutation {
@@ -88,17 +91,29 @@ const typeDefs = gql`
     sendMessage(
         conversationId: ID!, sender: ID!, text: String!
         ): Message
+    
+    createConversation(
+        investorId: ID!, startupId: ID!
+        ): Conversation!
+    
+    createInvestment(
+        investorId: ID!, startupId: ID!, amount: Float!, currency: String!
+        ): Investment!
 
-    updateInvestment(investmentId: ID!, status: String!, description: String!
+    updateInvestment(
+        investmentId: ID!, status: String!, description: String!
         ): Investment
     
-    deleteInvestment(investmentId: ID!
+    deleteInvestment(
+        investmentId: ID!
         ): Investment
     
-    deleteInvestor(investor_id: ID!
+    deleteInvestor(
+        investor_id: ID!
         ): String
     
-     deleteStartup(startup_id: ID!
+     deleteStartup(
+        startup_id: ID!
         ): String
   }
 `;
