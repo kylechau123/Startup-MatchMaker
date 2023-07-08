@@ -1,7 +1,7 @@
 // server/routes/messageRoutes.js
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
-const { Message } = require('../models');
+const { Message } = require('../server/models/Message');
 const schema = require('./schema');
 
 const router = express.Router();

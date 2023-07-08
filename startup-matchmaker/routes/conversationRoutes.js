@@ -1,14 +1,27 @@
 const express = require('express');
+const graphqlHTTP = require('express-graphql');
+const schema = require('./schema');
+const { Conversation } = require('../server/models/Conversation');
 const router = express.Router();
-const { checkAuth } = require('../middleware/authentication');
-const {
-  createConversation,
-  getConversations,
-  getConversation,
-} = require('../controllers/conversationController');
 
-router.post('/', checkAuth, createConversation);
-router.get('/:userId', checkAuth, getConversations);
-router.get('/:conversationId', checkAuth, getConversation);
+router.get('/:investorId/conversations', async (req, res) => {
+  const { investorId } = req.params;
+
+  const result = await graphqlHTTP.execute(schema, {
+    query: `query InvestorConversations($investorId: String!) {
+      investorConversations(investorId: $investorId) {
+        id
+        investorId
+        startupId
+        messages
+      }
+    }`,
+    variables: {
+      investorId,
+    },
+  });
+
+  res.json(result.data.investorConversations);
+});
 
 module.exports = router;

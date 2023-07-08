@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { Investor, Startup } = require('../models');
+const { Investor, Startup, Message, Conversation, Investment } = require('../models');
 const { signToken } = require('../utils/auth');
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
@@ -27,8 +27,25 @@ const resolvers = {
         investmentsByStartup: async (parent, { startupId }) => {
             return await Investment.find({ startup: startupId });
           },
+        investorConversations: async (parent, { investorId }) => {
+            const conversations = await Conversation.find({ investorId });
+            return conversations;
+        },
+        matchedStartups: async (parent, { investorId }) => {
+            const investor = await Investor.findById(investorId).populate('startups');
+            return investor.startups;
+          },
+        matchedInvestors: async (parent, { startupId }) => {
+            const startup = await Startup.findById(startupId);
+            const investors = await Investor.find({ startups: startupId });
+            return investors;
+          },
+        startupConversations: async (parent, { startupId }) => {
+            const conversations = await Conversation.find({ startupId });
+            return conversations;
+          },
     },
-    Mutations: {
+    Mutation: {
         addStartup: async (parent, args) => {
             const startup = await Startup.create(args);
             const token = signToken(startup);
@@ -45,6 +62,20 @@ const resolvers = {
 
             return { token, investor };
         },
+        deleteInvestor: async (parent, { investor_id }) => {
+            const investor = await Investor.findByIdAndDelete(investor_id);
+            if(!investor) {
+                throw new Error('Investor not found');
+            }
+            return "Investor deleted successfully";
+        },
+        deleteStartup: async (parent, { startup_id }) => {
+            const startup = await Startup.findByIdAndDelete(startup_id);
+            if(!startup) {
+                throw new Error('Startup not found');
+            }
+            return "Startup deleted successfully";
+        },
         updateInvestment: async (parent, { investmentId, status, description }) => {
             return await Investment.findByIdAndUpdate(
               investmentId,
@@ -52,8 +83,21 @@ const resolvers = {
               { new: true } // This option returns the updated document
             );
           },
+    
+        updateStartup: async (parent, args, { startup_id }) => {
+            const startup = await Startup.findByIdAndUpdate(startup_id, args, { new: true });
+            return startup;
+        },
         deleteInvestment: async (parent, { investmentId }) => {
             return await Investment.findByIdAndDelete(investmentId);
+       },
+        createConversation: async (parent, { investorId, startupId }) => {
+            const conversation = await Conversation.create({ investorId, startupId });
+            return conversation;
+        },
+        createInvestment: async (parent, { investorId, startupId, amount, currency }) => {
+            const investment = await Investment.create({ investorId, startupId, amount, currency });
+            return investment;
           },
 
         startupLogin: async (parent, { email, password }) => {
