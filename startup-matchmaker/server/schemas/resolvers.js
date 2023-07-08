@@ -27,10 +27,23 @@ const resolvers = {
         investmentsByStartup: async (parent, { startupId }) => {
             return await Investment.find({ startup: startupId });
           },
-          investorConversations: async (parent, { investorId }) => {
+        investorConversations: async (parent, { investorId }) => {
             const conversations = await Conversation.find({ investorId });
             return conversations;
         },
+        matchedStartups: async (parent, { investorId }) => {
+            const investor = await Investor.findById(investorId).populate('startups');
+            return investor.startups;
+          },
+        matchedInvestors: async (parent, { startupId }) => {
+            const startup = await Startup.findById(startupId);
+            const investors = await Investor.find({ startups: startupId });
+            return investors;
+          },
+        startupConversations: async (parent, { startupId }) => {
+            const conversations = await Conversation.find({ startupId });
+            return conversations;
+          },
     },
     Mutation: {
         addStartup: async (parent, args) => {
