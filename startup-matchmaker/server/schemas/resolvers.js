@@ -135,16 +135,26 @@ const resolvers = {
             return { token, investor };
         },
         match: async (parent, { startup_id }, context) => {
-            console.log(context);
             if (context.user) {
-
-                const investor = await Investor.findByIdAndUpdate(context.user._id, { $push: { startups: startup_id } });
-
+                const investor = await Investor.findByIdAndUpdate(
+                    context.user._id,
+                    { $push: { startups: startup_id } },
+                    { new: true }
+                );
+        
+                // Also add the investor to the Startup's investors list
+                const startup = await Startup.findByIdAndUpdate(
+                    startup_id,
+                    { $push: { investors: context.user._id } },
+                    { new: true }
+                );
+        
                 return investor;
             }
-
+        
             throw new AuthenticationError('Not logged in');
         },
+        
     }
 }
 

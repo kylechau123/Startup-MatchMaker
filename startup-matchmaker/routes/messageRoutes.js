@@ -2,7 +2,7 @@
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
 const { Message } = require('../server/models/Message');
-const schema = require('./schema');
+const schema = require('../server/schemas');
 
 const router = express.Router();
 
