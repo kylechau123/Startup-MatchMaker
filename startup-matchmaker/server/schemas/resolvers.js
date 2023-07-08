@@ -83,12 +83,21 @@ const resolvers = {
               { new: true } // This option returns the updated document
             );
           },
-          updateStartup: async (parent, args, { startup_id }) => {
+    
+        updateStartup: async (parent, args, { startup_id }) => {
             const startup = await Startup.findByIdAndUpdate(startup_id, args, { new: true });
             return startup;
         },
         deleteInvestment: async (parent, { investmentId }) => {
             return await Investment.findByIdAndDelete(investmentId);
+       },
+        createConversation: async (parent, { investorId, startupId }) => {
+            const conversation = await Conversation.create({ investorId, startupId });
+            return conversation;
+        },
+        createInvestment: async (parent, { investorId, startupId, amount, currency }) => {
+            const investment = await Investment.create({ investorId, startupId, amount, currency });
+            return investment;
           },
 
         startupLogin: async (parent, { email, password }) => {
