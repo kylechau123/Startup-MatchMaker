@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/your-db-name");
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/startup-matchmaker");
 
 mongoose.connection.on('connected', () => {
     console.log('Mongoose is connected')
