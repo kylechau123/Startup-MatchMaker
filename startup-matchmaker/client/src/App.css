@@ -1,0 +1,36 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: aliceblue;
+}
+
+.app {
+  padding-top: 5rem;
+}
+
+form {
+  width: 100%;
+}
+
+li:has(> a.active) {
+  background-color: rgb(49, 151, 149);
+}
+
+.loader {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+select option {
+  color: #000;
+}
+
+ul[role="listbox"] {
+  color: #000;
+}
+
+.homeContainer {
+  transition: all 0.5s ease-in-out;
+}
