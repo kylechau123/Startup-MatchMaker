@@ -28,6 +28,23 @@ const typeDefs = gql`
     password: String
     startups: [Startup]
   }
+  
+  type Conversation {
+    _id: ID
+    investorId: ID
+    startupId: ID
+    messages: [Message]
+  }
+
+  type Investment {
+    _id: ID
+    investorId: ID
+    startupId: ID
+    amount: Float
+    currency: String
+    status: String
+    description: String
+  }
 
   type Auth {
     token: ID
