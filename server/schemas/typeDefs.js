@@ -28,6 +28,24 @@ const typeDefs = gql`
     password: String
     startups: [Startup]
   }
+  
+  type Conversation {
+    _id: ID
+    investorId: ID
+    startupId: ID
+    messages: [Message]
+  }
+
+  type Investment {
+    investor: ID
+    startup: ID
+    stripeChargeId: ID
+    status: String
+    amount: Int
+    currency: String
+    description: String
+    timestamp: String
+  }
 
   type Auth {
     token: ID
@@ -40,6 +58,15 @@ const typeDefs = gql`
     getStartup(startup_id: ID!): Startup
     getInvestor(investor_id: ID!): Investor
     messages(conversationId: ID!): [Message]
+<<<<<<< HEAD
+=======
+    investmentsByInvestor(investorId: ID!): [Investment]
+    investmentsByStartup(startupId: ID!): [Investment]
+    investorConversations(investorId: ID!): [Conversation]
+    matchedStartups(investorId: ID!): [Startup]!
+    matchedInvestors(startupId: ID!): [Investor]!
+    startupConversations(startupId: ID!): [Conversation]!
+>>>>>>> 46da928085eb195de56271656095ca7e4996179f
   }
 
   type Mutation {
@@ -64,6 +91,18 @@ const typeDefs = gql`
       password: String
     ): Auth
 
+<<<<<<< HEAD
+=======
+    updateStartup(
+        startup_id: ID!
+        companyName: String
+        email: String
+        phoneNum: String
+        userName: String
+        password: String
+      ): Startup
+
+>>>>>>> 46da928085eb195de56271656095ca7e4996179f
     investorLogin(
       email: String
       password: String
@@ -73,7 +112,37 @@ const typeDefs = gql`
       startup_id: ID!
     ): Investor
     
+<<<<<<< HEAD
     sendMessage(conversationId: ID!, sender: ID!, text: String!): Message
+=======
+    sendMessage(
+        conversationId: ID!, sender: ID!, text: String!
+        ): Message
+    
+    createConversation(
+        investorId: ID!, startupId: ID!
+        ): Conversation!
+    
+    createInvestment(
+        investorId: ID!, startupId: ID!, amount: Float!, currency: String!
+        ): Investment!
+
+    updateInvestment(
+        investmentId: ID!, status: String!, description: String!
+        ): Investment
+    
+    deleteInvestment(
+        investmentId: ID!
+        ): Investment
+    
+    deleteInvestor(
+        investor_id: ID!
+        ): String
+    
+     deleteStartup(
+        startup_id: ID!
+        ): String
+>>>>>>> 46da928085eb195de56271656095ca7e4996179f
   }
 `;
 
