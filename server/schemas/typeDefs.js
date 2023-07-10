@@ -19,12 +19,6 @@ const typeDefs = gql`
     updatedAt: String
   }
 
-  type Conversation {
-    investorId: ID
-    startupId: ID
-    messages: [Message]
-  }
-
   type Investor {
     _id: ID
     companyName: String
@@ -40,16 +34,6 @@ const typeDefs = gql`
     investorId: ID
     startupId: ID
     messages: [Message]
-  }
-
-  type Investment {
-    _id: ID
-    investorId: ID
-    startupId: ID
-    amount: Float
-    currency: String
-    status: String
-    description: String
   }
 
   type Investment {

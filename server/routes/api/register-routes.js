@@ -11,26 +11,24 @@ router.post("/", async (req, res) => {
 
             {
                 "type": // either "startup" or "investor",
-                "companyName": "",
                 "email": "",
-                "phoneNum": "",
                 "userName": "",
                 "password": ""
             }
 
     */
 
-    const { companyName, email, phoneNum, userName, password } = req.body;
+    const { email, userName, password } = req.body;
 
     if (req.body.type == "startup") {
         const result = await Startup.create({
-            companyName, email, phoneNum, userName, password
+            email, userName, password
         })
 
         res.json(result);
     } else if (req.body.type == "investor") {
         const result = await Investor.create({
-            companyName, email, phoneNum, userName, password
+            email, userName, password
         })
 
         res.json(result);
