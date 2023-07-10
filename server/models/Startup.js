@@ -2,18 +2,10 @@ const {Schema, model} = require ('mongoose');
 const bcrypt = require('bcrypt');
 
 const startupSchema = new Schema({ 
-    companyName: {
-        type: String,
-        required: true
-    },
     email: {
         type: String,
         required: true,
         match: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/
-    },
-    phoneNum: {
-        type: String,
-        required: true
     },
     userName: {
         type: String,

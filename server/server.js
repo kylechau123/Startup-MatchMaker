@@ -4,6 +4,7 @@ const path = require('path');
 const { authMiddleware } = require('./utils/auth');
 const typeDefs = require('./schemas/typeDefs');
 const resolvers = require('./schemas/resolvers');
+const routes = require('./routes');
 
 const db = require('./config/connection');
 

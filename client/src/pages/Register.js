@@ -7,10 +7,10 @@ import { Box, Flex, Heading, Input, Button, FormControl, FormLabel, Select } fro
 const Register = (props) => {
     const navigate = useNavigate();
     const [inputValue, setInputValue] = useState({
-        username: '',
+        userName: '',
         email: '',
         password: '',
-        role: 'startup'
+        type: 'startup'
     });
 
     useEffect(() => {
@@ -23,7 +23,7 @@ const Register = (props) => {
     }, [props.user, navigate]);
 
 
-    const { username, email, password, role } = inputValue;
+    const { userName, email, password, role } = inputValue;
 
     const handleChange = (e) => {
         setInputValue({
@@ -47,22 +47,37 @@ const Register = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const { data } = await axios.post(
-                "http://localhost:4000/signup",
-                {
-                    ...inputValue,
+            const response = await fetch("/api/register", {
+                method: 'POST',
+                headers:{
+                    'Content-Type': 'application/json'
                 },
-                { withCredentials: true }
-            );
-            const { success, message } = data;
-            if (success) {
-                handleSuccess(message);
+                body: JSON.stringify(inputValue),
+            })
+            if (response.ok) {
+                handleSuccess("Successfully registered")
                 setTimeout(() => {
-                    navigate("/profile");
-                }, 1000);
+                            navigate("/profile");
+                        }, 1000);
             } else {
-                handleError(message);
+                handleError("Error")
             }
+            // const { data } = await axios.post(
+            //     "http://localhost:3001/api/register",
+            //     {
+            //         ...inputValue,
+            //     },
+            //     { withCredentials: true }
+            // );
+            // const { success, message } = data;
+            // if (success) {
+            //     handleSuccess(message);
+            //     setTimeout(() => {
+            //         navigate("/profile");
+            //     }, 1000);
+            // } else {
+            //     handleError(message);
+            // }
         } catch (error) {
             console.log(error);
         }
@@ -70,7 +85,7 @@ const Register = (props) => {
             ...inputValue,
             email: "",
             password: "",
-            username: "",
+            userName: "",
             role: ""
         });
     }
@@ -80,9 +95,9 @@ const Register = (props) => {
             <Flex align="center" justify="center" direction="column">
                 <Heading as="h1" size="lg" mb="2rem">Register</Heading>
                 <form onSubmit={handleSubmit}>
-                    <FormControl id="username" isRequired mb={3}>
+                    <FormControl id="userName" isRequired mb={3}>
                         <FormLabel>Your Name</FormLabel>
-                        <Input type="text" name="username" value={username} onChange={handleChange} />
+                        <Input type="text" name="userName" value={userName} onChange={handleChange} />
                     </FormControl>
                     <FormControl id="email" isRequired mb={3}>
                         <FormLabel>Email</FormLabel>

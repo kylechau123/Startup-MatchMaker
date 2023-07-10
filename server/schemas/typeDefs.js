@@ -58,15 +58,12 @@ const typeDefs = gql`
     getStartup(startup_id: ID!): Startup
     getInvestor(investor_id: ID!): Investor
     messages(conversationId: ID!): [Message]
-<<<<<<< HEAD
-=======
     investmentsByInvestor(investorId: ID!): [Investment]
     investmentsByStartup(startupId: ID!): [Investment]
     investorConversations(investorId: ID!): [Conversation]
     matchedStartups(investorId: ID!): [Startup]!
     matchedInvestors(startupId: ID!): [Investor]!
     startupConversations(startupId: ID!): [Conversation]!
->>>>>>> 46da928085eb195de56271656095ca7e4996179f
   }
 
   type Mutation {
@@ -91,8 +88,6 @@ const typeDefs = gql`
       password: String
     ): Auth
 
-<<<<<<< HEAD
-=======
     updateStartup(
         startup_id: ID!
         companyName: String
@@ -102,7 +97,6 @@ const typeDefs = gql`
         password: String
       ): Startup
 
->>>>>>> 46da928085eb195de56271656095ca7e4996179f
     investorLogin(
       email: String
       password: String
@@ -112,9 +106,6 @@ const typeDefs = gql`
       startup_id: ID!
     ): Investor
     
-<<<<<<< HEAD
-    sendMessage(conversationId: ID!, sender: ID!, text: String!): Message
-=======
     sendMessage(
         conversationId: ID!, sender: ID!, text: String!
         ): Message
@@ -142,7 +133,6 @@ const typeDefs = gql`
      deleteStartup(
         startup_id: ID!
         ): String
->>>>>>> 46da928085eb195de56271656095ca7e4996179f
   }
 `;
 

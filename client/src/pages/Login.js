@@ -44,22 +44,37 @@ const Login = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const { data } = await axios.post(
-                "http://localhost:4000/login",
-                {
-                    ...inputValue,
-                },
-                { withCredentials: true }
-            );
-            const { success, message } = data;
-            if (success) {
-                handleSuccess(message);
-                setTimeout(() => {
-                    navigate("/");
-                }, 1000);
-            } else {
-                handleError(message);
-            }
+            const response = await fetch("/api/login", {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(inputValue),
+        })
+        if (response.ok) {
+            handleSuccess("Successfully registered")
+            setTimeout(() => {
+                        navigate("/");
+                    }, 1000);
+        } else {
+            handleError("Error")
+        }
+            // const { data } = await axios.post(
+            //     "http://localhost:4000/login",
+            //     {
+            //         ...inputValue,
+            //     },
+            //     { withCredentials: true }
+            // );
+            // const { success, message } = data;
+            // if (success) {
+            //     handleSuccess(message);
+            //     setTimeout(() => {
+            //         navigate("/");
+            //     }, 1000);
+            // } else {
+            //     handleError(message);
+            // }
         } catch (error) {
             console.log(error);
         }

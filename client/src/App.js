@@ -39,20 +39,20 @@ function App() {
       searchParams.delete("logout");
       setSearchParams(searchParams);
     }
-    const verifyCookie = async () => {
-      const { data } = await axios.post(
-        "http://localhost:4000",
-        {},
-        { withCredentials: true }
-      );
-      const { status, userdata, userEmail } = data;
-      setUser(userdata);
-      setUserEmail(userEmail);
-      return status
-        ? ""
-        : (removeCookie("token"));
-    };
-    verifyCookie();
+    // const verifyCookie = async () => {
+    //   const { data } = await axios.post(
+    //     "http://localhost:3001",
+    //     {},
+    //     { withCredentials: true }
+    //   );
+    //   const { status, userdata, userEmail } = data;
+    //   setUser(userdata);
+    //   setUserEmail(userEmail);
+    //   return status
+    //     ? ""
+    //     : (removeCookie("token"));
+    // };
+    // verifyCookie();
   }, [cookies, navigate, removeCookie]);
 
 
