@@ -22,11 +22,13 @@ const resolvers = {
             return messages;
           },
         investmentsByInvestor: async (parent, { investorId }) => {
-            return await Investment.find({ investor: investorId });
-          },
+            const investments = await Investment.find({ investor: investorId });
+            return investments;
+        },
         investmentsByStartup: async (parent, { startupId }) => {
-            return await Investment.find({ startup: startupId });
-          },
+            const investments = await Investment.find({ startup: startupId });
+            return investments;
+        },
         investorConversations: async (parent, { investorId }) => {
             const conversations = await Conversation.find({ investorId });
             return conversations;
@@ -77,28 +79,55 @@ const resolvers = {
             return "Startup deleted successfully";
         },
         updateInvestment: async (parent, { investmentId, status, description }) => {
-            return await Investment.findByIdAndUpdate(
-              investmentId,
-              { status, description },
-              { new: true } // This option returns the updated document
+            const updatedInvestment = await Investment.findByIdAndUpdate(
+                investmentId,
+                { status, description },
+                { new: true } // This option returns the updated document
             );
-          },
-    
+            return updatedInvestment;
+        },
         updateStartup: async (parent, args, { startup_id }) => {
             const startup = await Startup.findByIdAndUpdate(startup_id, args, { new: true });
             return startup;
         },
         deleteInvestment: async (parent, { investmentId }) => {
-            return await Investment.findByIdAndDelete(investmentId);
+            const deletedInvestment = await Investment.findByIdAndDelete(investmentId);
+            if (deletedInvestment) {
+                return deletedInvestment._id; // the id of the deleted investment
+            }
+            throw new Error('No investment with this id found');
        },
         createConversation: async (parent, { investorId, startupId }) => {
             const conversation = await Conversation.create({ investorId, startupId });
             return conversation;
         },
         createInvestment: async (parent, { investorId, startupId, amount, currency }) => {
-            const investment = await Investment.create({ investorId, startupId, amount, currency });
-            return investment;
-          },
+            try {
+                // Create a new Stripe charge
+                const charge = await stripe.charges.create({
+                    amount: amount * 100, // Stripe handles amounts in cents
+                    currency,
+                    description: `Investment from investor: ${investorId} to startup: ${startupId}`,
+                    source: 'tok_mastercard', // You need to replace this with a real token from your front-end
+                });
+        
+                const investment = await Investment.create({
+                    investor: investorId,
+                    startup: startupId,
+                    amount,
+                    currency,
+                    stripeChargeId: charge.id,
+                    status: 'completed', // You might want to add more sophisticated status management
+                    description: `Investment from investor: ${investorId} to startup: ${startupId}`,
+                    timestamp: new Date().toISOString(),
+                });
+        
+                return investment;
+            } catch (err) {
+                console.error(err);
+                throw new Error('Error creating the investment');
+            }
+        },        
 
         startupLogin: async (parent, { email, password }) => {
             const startup = await Startup.findOne({ email });
