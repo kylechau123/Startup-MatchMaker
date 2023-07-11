@@ -37,6 +37,7 @@ const typeDefs = gql`
   }
 
   type Investment {
+    _id: ID
     investor: ID
     startup: ID
     stripeChargeId: ID
@@ -46,6 +47,7 @@ const typeDefs = gql`
     description: String
     timestamp: String
   }
+  
 
   type Auth {
     token: ID
