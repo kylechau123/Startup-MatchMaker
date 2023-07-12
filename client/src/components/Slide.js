@@ -75,9 +75,10 @@ const Slide = () => {
                         });
                     }
                     else {
+                        /*
                         toast.error(data.message, {
                             position: "bottom-left"
-                        });
+                        });*/
                     }
                     setClicked(false);
                 })

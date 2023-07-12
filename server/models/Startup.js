@@ -1,36 +1,65 @@
-const {Schema, model} = require ('mongoose');
-const bcrypt = require('bcrypt');
+import { Schema, model } from 'mongoose';
 
-const startupSchema = new Schema({ 
-    email: {
+const StartupSchema = new Schema({
+    name: {
         type: String,
         required: true,
-        match: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/
+        trim: true
     },
-    userName: {
+
+    description: {
         type: String,
         required: true,
-        unique: true
     },
-    password: {
+
+    logo: {
         type: String,
-        required: true
+    },
+
+    industry: {
+        type: [String],
+        required: true,
+    },
+
+    website: {
+        type: String,
+        required: true,
+    },
+
+    amountNeeded: {
+        type: Number,
+    },
+
+    backers: [{
+        "investor": {
+            type: Schema.Types.ObjectId,
+            ref: 'Investor'
+        }, "amount": Number
+    }],
+
+    likes: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Investor'
+    }],
+
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     }
+},
+    {
+        toJSON: {
+            virtuals: true,
+        },
+        id: false
+    });
+
+StartupSchema.virtual('investors', {
+    ref: 'Investor',
+    localField: '_id',
+    foreignField: 'user'
 });
 
-startupSchema.pre('save', async function(next) {
-    if (this.isNew || this.isModified('password')) {
-      const saltRounds = 10;
-      this.password = await bcrypt.hash(this.password, saltRounds);
-    }
-  
-    next();
-  });
-  
-  startupSchema.methods.isCorrectPassword = async function(password) {
-    return await bcrypt.compare(password, this.password);
-  };
+const Startup = model('Startup', StartupSchema);
 
-const Startup = model("Startup", startupSchema);
-
-module.exports = Startup;
+export default Startup;
