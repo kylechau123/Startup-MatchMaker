@@ -3,15 +3,20 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+<<<<<<< HEAD
   "type": "module",
   "scripts": {
     "start": "nodemon index.js",
+=======
+  "scripts": {
+>>>>>>> 5be5b18ca8e728ab8d11a842163447da5f219d47
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+<<<<<<< HEAD
     "bcrypt": "^5.1.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -26,5 +31,15 @@
     "socket.io": "^4.7.1",
     "stripe": "^12.12.0",
     "uuid": "^9.0.0"
+=======
+    "apollo-server-express": "^3.12.0",
+    "bcrypt": "^4.0.1",
+    "express": "^4.17.2",
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.3.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.9.2",
+    "stripe": "^8.67.0"
+>>>>>>> 5be5b18ca8e728ab8d11a842163447da5f219d47
   }
 }
