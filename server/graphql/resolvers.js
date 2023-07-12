@@ -1,101 +1,10 @@
-import { GraphQLSchema, GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList } from 'graphql';
+import { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList } from 'graphql';
 import Investor from '../models/Investor.js';
 import { verifyAuthGQ } from '../middlewares/AuthMiddleware.js';
 import User from '../models/User.js';
 import Startup from '../models/Startup.js';
+import { InvestorType, StartupType, UserType, NotificationType } from './typeDefs.js';
 
-// Define the types
-const InvestorType = new GraphQLObjectType({
-    name: 'Investor',
-    fields: () => ({
-        _id: { type: GraphQLID },
-        investAmount: { type: GraphQLString },
-        interests: { type: new GraphQLList(GraphQLString) },
-        photo: { type: GraphQLString },
-        likes: { type: new GraphQLList(StartupType) },
-        investments: { type: new GraphQLList(InvestmentType) },
-        user: { type: UserType }
-    })
-});
-
-const StartupType = new GraphQLObjectType({
-    name: 'Startup',
-    fields: () => ({
-        _id: { type: GraphQLID },
-        name: { type: GraphQLString },
-        description: { type: GraphQLString },
-        logo: { type: GraphQLString },
-        industry: { type: new GraphQLList(GraphQLString) },
-        website: { type: GraphQLString },
-        amountNeeded: { type: GraphQLString },
-        backers: { type: new GraphQLList(BackerType) },
-        likes: { type: new GraphQLList(InvestorType) },
-        user: { type: UserType },
-        investors: { type: new GraphQLList(InvestorType) }
-    })
-});
-
-const BackerType = new GraphQLObjectType({
-    name: 'Backer',
-    fields: () => ({
-        investor: { type: InvestorType },
-        amount: { type: GraphQLString }
-    })
-});
-
-const InvestmentType = new GraphQLObjectType({
-    name: 'Investment',
-    fields: () => ({
-        startup: { type: StartupType },
-        amount: { type: GraphQLString }
-    })
-});
-
-const UserType = new GraphQLObjectType({
-    name: 'User',
-    fields: () => ({
-        _id: { type: GraphQLID },
-        email: { type: GraphQLString },
-        username: { type: GraphQLString },
-        password: { type: GraphQLString },
-        role: { type: GraphQLString },
-        notifications: { type: new GraphQLList(NotificationType) },
-        createdAt: { type: GraphQLString }
-    })
-});
-
-const MessageType = new GraphQLObjectType({
-    name: 'Message',
-    fields: () => ({
-        _id: { type: GraphQLID },
-        text: { type: GraphQLString },
-        sender: { type: UserType },
-        createdAt: { type: GraphQLString }
-    })
-});
-
-const NotificationType = new GraphQLObjectType({
-    name: 'Notification',
-    fields: () => ({
-        _id: { type: GraphQLID },
-        message: { type: GraphQLString },
-        link: { type: GraphQLString },
-        createdAt: { type: GraphQLString }
-    })
-});
-
-const ThreadType = new GraphQLObjectType({
-    name: 'Thread',
-    fields: () => ({
-        _id: { type: GraphQLID },
-        user1: { type: UserType },
-        user2: { type: UserType },
-        messages: { type: new GraphQLList(MessageType) },
-        createdAt: { type: GraphQLString },
-        user1Info: { type: UserType },
-        user2Info: { type: UserType }
-    })
-});
 
 // Define the root query type
 const RootQueryType = new GraphQLObjectType({
@@ -326,10 +235,4 @@ const RootMutationType = new GraphQLObjectType({
     }
 });
 
-// Create the GraphQL schema
-const schema = new GraphQLSchema({
-    query: RootQueryType,
-    mutation: RootMutationType
-});
-
-export default schema;
+export { RootQueryType, RootMutationType };

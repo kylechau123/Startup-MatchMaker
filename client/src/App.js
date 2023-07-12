@@ -47,6 +47,12 @@ function App() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [user, setUser] = useState('');
   const [userEmail, setUserEmail] = useState('');
+  const [updated, setUpdated] = useState(false);
+
+  const update = () => {
+    setUpdated(!updated);
+    console.log(updated);
+  }
 
   useEffect(() => {
     if (searchParams.get("logout")) {
@@ -72,12 +78,10 @@ function App() {
     verifyCookie();
   }, [cookies, navigate, removeCookie]);
 
-
-
   return (
     <ApolloProvider client={client}>
       <ChakraProvider theme={theme}>
-        <Header user={user} />
+        <Header user={user} update={update} />
         <div className="app">
           <Routes>
             <Route path="/" element={<Home user={user} userEmail={userEmail} />} />

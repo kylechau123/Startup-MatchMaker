@@ -55,7 +55,7 @@ const Login = (props) => {
             if (success) {
                 handleSuccess(message);
                 setTimeout(() => {
-                    navigate("/");
+                    window.location = "/";
                 }, 1000);
             } else {
                 handleError(message);

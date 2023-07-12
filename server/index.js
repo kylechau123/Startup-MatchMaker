@@ -16,7 +16,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 
 import { graphqlHTTP } from "express-graphql";
-import schema from "./schema/schema.js";
+import schema from "./graphql/index.js";
 
 
 dotenv.config();

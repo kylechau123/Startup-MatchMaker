@@ -126,7 +126,7 @@ export const UPDATE_INVESTOR = gql`
     `;
 
 export const UPDATE_STARTUP = gql`
-    mutation updateStartup($name: String!, $logo: String!, $industry: [String]!, $description: String!, $website: String!, $amountNeeded: String!) {
+    mutation updateStartup($name: String!, $logo: String, $industry: [String]!, $description: String!, $website: String!, $amountNeeded: String!) {
         updateStartup(name: $name, logo: $logo, industry: $industry, description: $description, website: $website, amountNeeded: $amountNeeded) {
             _id
             name

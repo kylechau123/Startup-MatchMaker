@@ -58,7 +58,7 @@ const Register = (props) => {
             if (success) {
                 handleSuccess(message);
                 setTimeout(() => {
-                    navigate("/profile");
+                    window.location = "/profile";
                 }, 1000);
             } else {
                 handleError(message);
