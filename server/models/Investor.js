@@ -1,40 +1,46 @@
-const {Schema, model} = require ('mongoose');
-const bcrypt = require('bcrypt');
+import { Schema, model } from 'mongoose';
 
-const investorSchema = new Schema({ 
-    email: {
+const InvestorSchema = new Schema({
+    investAmount: {
         type: String,
         required: true,
-        match: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/
+        trim: true
     },
-    userName: {
-        type: String,
+
+    interests: {
+        type: [String],
         required: true,
-        unique: true
     },
-    password: {
+
+    photo: {
         type: String,
-        required: true
     },
-    startups: [{
+
+    likes: [{
         type: Schema.Types.ObjectId,
-        ref: "Startup"
+        ref: 'Startup'
     }],
-});
 
-investorSchema.pre('save', async function(next) {
-    if (this.isNew || this.isModified('password')) {
-      const saltRounds = 10;
-      this.password = await bcrypt.hash(this.password, saltRounds);
+    investments: [{
+        "startup": {
+            type: Schema.Types.ObjectId,
+            ref: 'Startup'
+        }, "amount": Number
+    }],
+
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     }
-  
-    next();
-  });
-  
-  investorSchema.methods.isCorrectPassword = async function(password) {
-    return await bcrypt.compare(password, this.password);
-  };
+},
+    {
+        toJSON: {
+            virtuals: true,
+        },
+        id: false
+    });
 
-const Investor = model("Investor", investorSchema);
 
-module.exports = Investor;
+const Investor = model('Investor', InvestorSchema);
+
+export default Investor;

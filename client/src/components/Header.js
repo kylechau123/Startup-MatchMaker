@@ -8,7 +8,7 @@ const Header = (props) => {
     return (
         <Box as="header" bg="gray.800" color="white">
             <Flex as="nav" align="center" justify="space-between" wrap="wrap" padding="1rem">
-                <Box as="div" align="left" flexGrow="1">
+                <Box as="div" alignSelf="flex-start" flexGrow="1">
                     <Link to="/">
                         <Image src={logo} h="70px" borderRadius='10px'></Image>
                     </Link>

@@ -3,8 +3,12 @@ import axios from "axios";
 import Loader from "../components/Loader";
 import { toast } from "react-toastify";
 import { Box, Flex, Heading, Input, Button, FormControl, FormLabel, Textarea } from '@chakra-ui/react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { MultiSelect } from 'chakra-multiselect';
+import { AiOutlineArrowLeft } from 'react-icons/ai';
+import { useMutation } from '@apollo/client';
+import { UPDATE_INVESTOR } from '../utils/graphql';
+import { UPDATE_STARTUP } from "../utils/graphql";
 
 const Profile = (props) => {
     const navigate = useNavigate();
@@ -78,6 +82,8 @@ const Profile = (props) => {
 
     const { name, description, industry, amountNeeded, website } = startupInputValue;
     const { investAmount, interests } = investorInputValue;
+    const [updateInvestor] = useMutation(UPDATE_INVESTOR);
+    const [updateStartup] = useMutation(UPDATE_STARTUP);
 
     const handleChange = (e) => {
         let setInputValue = null;
@@ -169,6 +175,7 @@ const Profile = (props) => {
                         industry: response.data.startup.industry ? response.data.startup.industry : [],
                         amountNeeded: response.data.startup.amountNeeded,
                         website: response.data.startup.website,
+                        logo: response.data.startup.logo
                     });
                 }
                 else if (response.data.user && response.data.user.role === "investor" && response.data.investor) {
@@ -176,6 +183,7 @@ const Profile = (props) => {
                         ...investorInputValue,
                         investAmount: response.data.investor.investAmount,
                         interests: response.data.investor.interests ? response.data.investor.interests : [],
+                        photo: response.data.investor.photo
                     });
                 }
 
@@ -191,37 +199,49 @@ const Profile = (props) => {
         setLoading(true);
         let inputValue = {};
         let setInputValue = null;
-        let endpoint = null;
         if (user.user.role === "startup") {
             inputValue = startupInputValue;
             setInputValue = setStartupInputValue;
-            endpoint = "startup/update";
+
+            try {
+                updateStartup({
+                    variables: {
+                        ...inputValue
+                    }
+                }).then((res) => {
+                    if (res) {
+                        handleSuccess("Updated Successfully");
+                        setLoading(false);
+                        navigate("/");
+                    }
+                }).catch((err) => {
+                    handleError(err.message);
+                });
+            } catch (err) {
+                console.log(err);
+            }
         }
         else {
             inputValue = investorInputValue;
             setInputValue = setInvestorInputValue;
-            endpoint = "investor/update";
-        }
-        try {
-            const { data } = await axios.post(
-                `http://localhost:4000/user/${endpoint}`,
-                {
-                    ...inputValue,
-                },
-                { withCredentials: true }
-            );
-            const { success, message } = data;
-            setLoading(false);
-            if (success) {
-                handleSuccess(message);
-                setTimeout(() => {
-                    navigate("/");
-                }, 1000);
-            } else {
-                handleError(message);
+
+            try {
+                updateInvestor({
+                    variables: {
+                        ...inputValue
+                    }
+                }).then((res) => {
+                    if (res) {
+                        handleSuccess("Updated Successfully");
+                        setLoading(false);
+                        navigate("/");
+                    }
+                }).catch((err) => {
+                    handleError(err.message);
+                });
+            } catch (err) {
+                console.log(err);
             }
-        } catch (err) {
-            console.log(err);
         }
     }
 
@@ -239,6 +259,7 @@ const Profile = (props) => {
         <>
             {user.user && user.user.role === "startup" ?
                 <>
+                    <Box maxWidth={600} m='auto' mb={5}><Link to="/" style={{ fontSize: '30px' }}> <AiOutlineArrowLeft /></Link></Box>
                     <Box as="section" bg="gray.800" color="white" p="2rem" maxWidth={600} m="auto" borderRadius={10}>
                         <Flex align="center" justify="center" direction="column">
                             <Heading as="h1" size="lg" mb="2rem">{user.startup ? <>Edit Your Startup Profile</> : <>Complete Your Startup Profile</>}</Heading>
@@ -291,6 +312,7 @@ const Profile = (props) => {
 
             {user.user && user.user.role === "investor" ?
                 <>
+                    <Box maxWidth={600} m='auto' mb={5}><Link to="/" style={{ fontSize: '30px' }}> <AiOutlineArrowLeft /></Link></Box>
                     <Box as="section" bg="gray.800" color="white" p="2rem" maxWidth={600} m="auto" borderRadius={10}>
                         <Flex align="center" justify="center" direction="column">
                             <Heading as="h1" size="lg" mb="2rem">{user.investor ? <>Edit Your Investor Profile</> : <>Complete Your Investor Profile</>}</Heading>
