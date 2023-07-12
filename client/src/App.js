@@ -21,11 +21,23 @@ import { ToastContainer } from "react-toastify";
 import { MultiSelectTheme } from 'chakra-multiselect';
 import { useSearchParams } from 'react-router-dom';
 import socketIO from "socket.io-client";
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider, DefaultOptions } from '@apollo/client';
 import { createUploadLink } from 'apollo-upload-client';
+
+const defaultOptions: DefaultOptions = {
+  watchQuery: {
+    fetchPolicy: 'no-cache',
+    errorPolicy: 'ignore',
+  },
+  query: {
+    fetchPolicy: 'no-cache',
+    errorPolicy: 'all',
+  },
+}
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
+  defaultOptions: defaultOptions,
   link: createUploadLink({
     uri: 'http://localhost:4000/graphql',
     credentials: 'include'

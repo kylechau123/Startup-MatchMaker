@@ -13,8 +13,6 @@ import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-
-
 import { graphqlHTTP } from "express-graphql";
 import schema from "./graphql/index.js";
 
@@ -36,6 +34,7 @@ app.use(
         credentials: true,
     })
 );
+
 app.use('/graphql', graphqlHTTP((req, res) => ({
     schema: schema,
     graphiql: true, // Enable GraphiQL for testing the API

@@ -291,7 +291,7 @@ const Profile = (props) => {
                                 </FormControl>
                                 <FormControl id="amountNeeded" mb="1rem" isRequired>
                                     <FormLabel>Amount Needed ($)</FormLabel>
-                                    <Input type="text" name="amountNeeded" value={amountNeeded} onChange={handleChange} />
+                                    <Input type="number" name="amountNeeded" value={amountNeeded} onChange={handleChange} />
                                 </FormControl>
                                 <FormControl id="website" mb="1rem" isRequired>
                                     <FormLabel>Startup Website</FormLabel>

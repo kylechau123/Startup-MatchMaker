@@ -27,7 +27,7 @@ const StartupSchema = new Schema({
     },
 
     amountNeeded: {
-        type: Number,
+        type: String,
     },
 
     backers: [{
