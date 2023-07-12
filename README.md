@@ -78,7 +78,7 @@ npm start
 The application should now be running on port 3000.
 
 Special Thanks
-Shout out to the awesome Instructors and TAs who worked with me through numerous challenges. These individuals include: Diego, Enrique Gomes, and Erik Hoverstein.
+Shout out to the awesome Instructors and TAs who worked with me through numerous challenges. These individuals include: Diego, Enrique Gomes, Joem Casusi, and Erik Hoverstein.
 
 Authors
 Lavell Juan <br>
